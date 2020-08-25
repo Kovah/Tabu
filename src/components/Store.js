@@ -10,19 +10,14 @@ const store = new Vuex.Store({
     // Defaults
     timerDefault: 60,
     countdownDefault: 4,
-    gameInitText: 'Mach dich bereit!',
 
     // General game data
-    playerName: '',
+    playerName: 'Player 1',
     selectedCategory: 'animals',
     availableCards: {},
 
-    // Menu states
-    playerReady: false,
-    categoryReady: true,
-    gameReady: false,
-
     // App states
+    showMenuPanel: true,
     showGamePanel: false,
     showHighscorePanel: false,
     gameCountdown: false,
@@ -39,18 +34,14 @@ const store = new Vuex.Store({
   },
   mutations: {
     // Menu mutations
-    playerReady (state, playername) {
+    setPlayerName (state, playername) {
       state.playerName = playername;
-      state.gameReady = state.categoryReady;
     },
-    playerNotReady (state) {
-      state.gameReady = state.playerReady = false;
+    turnDuration (state, turnDuration) {
+      state.timerDefault = turnDuration;
     },
-    categoryReady (state) {
-      state.gameReady = state.playerReady;
-    },
-    categoryNotReady (state) {
-      state.gameReady = state.categoryReady = false;
+    turnNotSet (state) {
+      state.timerDefault = 60;
     },
     selectCategory (state, newCategory) {
       state.selectedCategory = newCategory;
@@ -59,10 +50,11 @@ const store = new Vuex.Store({
     },
 
     // Start the game countdown
-    startCountdown (state) {
+    startCountdown (state, i18n) {
+      state.showMenuPanel = false;
       state.showGamePanel = true;
       state.gameCountdown = true;
-      state.keyword = state.gameInitText;
+      state.keyword = i18n.t('game.init');
       state.availableCards = GameData.getCardsForCategory(state.selectedCategory);
 
       console.log('Game started by player ' + state.playerName + ' with category ' + state.selectedCategory);
@@ -124,6 +116,8 @@ const store = new Vuex.Store({
     // Global actions
     showMenu (state) {
       state.gameStarted = false;
+
+      state.showMenuPanel = true;
       state.showGamePanel = false;
       state.showHighscorePanel = false;
 
@@ -176,6 +170,8 @@ const store = new Vuex.Store({
     },
     showHighscores (state, afterGamePanel) {
       state.gameStarted = false;
+
+      state.showMenuPanel = false;
       state.showGamePanel = false;
 
       if (afterGamePanel) {

@@ -1,9 +1,9 @@
 <template>
 
-  <div class="menu__wrapper">
-    <div id="menu" v-bind:style="{overflow: showGamePanel || showHighscorePanel ? 'hidden' : ''}">
-      <div class="container">
+    <div id="menu" class="panel">
+      <div class="panel-content">
 
+        <LangSwitch/>
         <Logo/>
         <HowTo/>
         <PlayerForm/>
@@ -13,7 +13,6 @@
 
       </div>
     </div>
-  </div>
 
 </template>
 
@@ -24,24 +23,18 @@
   import CategorySelect from './CategorySelect/CategorySelect';
   import MenuButtons from './MenuButtons/MenuButtons';
   import MenuFooter from './MenuFooter/MenuFooter';
+  import LangSwitch from './LangSwitch/LangSwitch';
 
   export default {
     name: 'Menu',
     components: {
+      LangSwitch,
       Logo,
       HowTo,
       PlayerForm,
       CategorySelect,
       MenuButtons,
       MenuFooter
-    },
-    computed: {
-      showHighscorePanel () {
-        return this.$store.state.showHighscorePanel;
-      },
-      showGamePanel () {
-        return this.$store.state.showGamePanel;
-      }
     }
   };
 </script>

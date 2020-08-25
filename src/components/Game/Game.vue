@@ -1,14 +1,16 @@
 <template>
 
-  <transition name="panel-active">
-    <div id="game" class="panel" v-if="showGamePanel">
+    <div id="game" class="panel">
+      <div class="panel-content">
 
-      <GameHeader/>
-      <GameContent/>
-      <GameButtons/>
+        <div class="game-panel">
+          <GameHeader/>
+          <GameContent/>
+          <GameButtons/>
+        </div>
 
+      </div>
     </div>
-  </transition>
 
 </template>
 
@@ -23,11 +25,6 @@
       GameHeader,
       GameContent,
       GameButtons
-    },
-    computed: {
-      showGamePanel () {
-        return this.$store.state.showGamePanel;
-      }
     }
   };
 </script>
